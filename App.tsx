@@ -1,8 +1,10 @@
+import 'intl';
+import 'intl/locale-data/jsonp/pt-BR';
 import React from 'react';
 import AppLoading from 'expo-app-loading';
 import { ThemeProvider } from 'styled-components';
 
-import { NavigationContainer } from '@react-navigation/native'
+import { NavigationContainer } from '@react-navigation/native';
 
 import {
   useFonts,
@@ -11,7 +13,7 @@ import {
   Poppins_700Bold,
 } from '@expo-google-fonts/poppins';
 
-import theme from './src/global/styles/theme'
+import theme from './src/global/styles/theme';
 
 import { AppRoutes } from './src/routes/app.routes';
 
@@ -23,7 +25,7 @@ export default function App() {
   });
 
   if (!fontsLoaded) {
-    return <AppLoading />
+    return <AppLoading />;
   }
 
   return (

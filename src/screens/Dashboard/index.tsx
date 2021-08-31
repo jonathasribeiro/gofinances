@@ -1,6 +1,12 @@
-import React from "react";
-import { HighlightCard } from "../../components/HighlightCard";
-import { TransactioCard, TransactioCardProps } from "../../components/TransactionCard";
+import React from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+import { useFocusEffect } from '@react-navigation/native';
+import { HighlightCard } from '../../components/HighlightCard';
+import {
+  TransactioCard,
+  TransactioCardProps,
+} from '../../components/TransactionCard';
 
 import {
   Container,
@@ -16,48 +22,59 @@ import {
   Transactions,
   Title,
   TransactionList,
-  LogoutButton
-} from "./styles";
+  LogoutButton,
+} from './styles';
 
 export interface DataListProps extends TransactioCardProps {
   id: string;
 }
 
 export function Dashboard() {
-  const data: DataListProps[] = [{
-    id: '1',
-    type: 'positive',
-    title: "Desenvolvimento de Site",
-    amount: "R$ 12.000,00",
-    category: {
-      name: 'Vendas',
-      icon: 'dollar-sign'
-    },
-    date: "13/04/2020",
-  },
-  {
-    id: '2',
-    type: 'negative',
-    title: "Hamburgueria Pizzy",
-    amount: "R$ 59,00",
-    category: {
-      name: 'Alimentação',
-      icon: 'coffee'
-    },
-    date: "10/04/2020",
-  },
-  {
-    id: '3',
-    type: 'negative',
-    title: "Aluguel do apartamento",
-    amount: "R$ 1.200,00",
-    category: {
-      name: 'Casa',
-      icon: 'shopping-bag'
-    },
-    date: "10/04/2020",
-  }
-  ];
+  const [data, setData] = React.useState<DataListProps[]>([]);
+
+  const loadTransaction = async () => {
+    const dataKey = '@gofinances:transactions';
+    const response = await AsyncStorage.getItem(dataKey);
+
+    const transactions = response ? JSON.parse(response) : [];
+
+    const transactionsFormatted: DataListProps[] = transactions.map(
+      (item: DataListProps) => {
+        const amount = Number(item.amount).toLocaleString('pt-BR', {
+          style: 'currency',
+          currency: 'BRL',
+        });
+
+        const date = Intl.DateTimeFormat('pt-BR', {
+          day: '2-digit',
+          month: '2-digit',
+          year: '2-digit',
+        }).format(new Date(item.date));
+
+        return {
+          id: item.id,
+          name: item.name,
+          amount,
+          type: item.type,
+          category: item.category,
+          date,
+        };
+      },
+    );
+
+    setData(transactionsFormatted);
+    console.log(transactionsFormatted);
+  };
+
+  React.useEffect(() => {
+    loadTransaction();
+  }, []);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      loadTransaction();
+    }, []),
+  );
 
   return (
     <Container>
@@ -66,7 +83,7 @@ export function Dashboard() {
           <UserInfo>
             <Photo
               source={{
-                uri: "https://avatars.githubusercontent.com/u/54040740?v=4",
+                uri: 'https://avatars.githubusercontent.com/u/54040740?v=4',
               }}
             />
             <User>
@@ -75,7 +92,7 @@ export function Dashboard() {
             </User>
           </UserInfo>
 
-          <LogoutButton onPress={() => { }}>
+          <LogoutButton onPress={() => {}}>
             <Icon name="power" />
           </LogoutButton>
         </UserWrapper>

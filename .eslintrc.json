@@ -30,6 +30,7 @@
       }
     ],
     "no-use-before-define": "off",
+    "semi": [2, "always"],
     "@typescript-eslint/no-use-before-define": ["error"],
     "react/react-in-jsx-scope": "off",
     "prettier/prettier": "error",
