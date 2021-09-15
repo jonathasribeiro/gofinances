@@ -25,6 +25,7 @@ import { ptBR } from 'date-fns/locale';
 
 import { useTheme } from 'styled-components';
 import { ActivityIndicator } from 'react-native';
+import { useAuth } from '../../hooks/auth';
 
 interface TransactionData {
   id: string;
@@ -52,6 +53,7 @@ export function Resume() {
   >([]);
 
   const theme = useTheme();
+  const { user } = useAuth();
 
   const handleChangeData = (action: 'next' | 'prev') => {
     if (action === 'next') {
@@ -63,7 +65,7 @@ export function Resume() {
 
   const loadData = async () => {
     setIsLoading(true);
-    const dataKey = '@gofinances:transactions';
+    const dataKey = `@gofinances:transactions_user:${user.id}`;
     const response = await AsyncStorage.getItem(dataKey);
     const responseFormatted = response ? JSON.parse(response) : [];
 
