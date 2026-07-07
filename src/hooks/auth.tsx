@@ -6,8 +6,10 @@ import React, {
   useEffect,
 } from 'react';
 
-const { CLIENT_ID } = process.env;
-const { REDIRECT_URI } = process.env;
+import Constants from 'expo-constants';
+
+const CLIENT_ID = Constants.expoConfig?.extra?.clientId as string | undefined;
+const REDIRECT_URI = Constants.expoConfig?.extra?.redirectUri as string | undefined;
 
 import * as AuthSession from 'expo-auth-session';
 import * as AppleAuthentication from 'expo-apple-authentication';

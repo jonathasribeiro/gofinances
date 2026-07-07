@@ -1,39 +1,41 @@
 # GoFinances
 
-Personal finance mobile dashboard built with **React Native**, **Expo**, and **TypeScript**.
+Personal finance mobile app with **React Native**, **Expo**, and **TypeScript**.
 
 ## Features
 
-- Income and expense tracking with categorized transactions
-- Financial charts and visual summaries (Victory Native)
-- Form validation with React Hook Form and Yup
-- Styled Components for consistent mobile UI
-- AsyncStorage for local data persistence
+- Income and expense tracking
+- Category management and charts (Victory Native)
+- Apple / Google sign-in via Expo Auth Session
+- AsyncStorage persistence
 
 ## Stack
 
-| Layer | Technology |
-|-------|------------|
-| Mobile | React Native + Expo |
-| Language | TypeScript |
-| Navigation | React Navigation |
-| Charts | Victory Native |
-| Forms | React Hook Form + Yup |
-| Styling | Styled Components |
+- React Native + Expo
+- TypeScript
+- Styled Components
+- React Hook Form + Yup
 
-## Getting started
+## Environment
+
+Copy `.env.example` to `.env` and configure OAuth credentials.
+
+Configuration is loaded via `app.config.js` → `expo.extra`.
+
+## Run
 
 ```bash
-npm install
-npm start
+yarn install
+yarn start
 ```
 
-Use Expo Go or a simulator to run the app.
+## Docker (web preview)
 
-## Domain
-
-Fintech-style personal finance UX — relevant to capital markets and consumer financial products.
+```bash
+docker build -t gofinances .
+docker run -p 19006:19006 gofinances
+```
 
 ## Author
 
-**Jonathas Ribeiro** — [LinkedIn](https://www.linkedin.com/in/jonathasribeiroreal)
+**Jonathas Ribeiro** — Senior Fullstack Engineer
